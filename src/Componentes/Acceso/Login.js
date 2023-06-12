@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -13,19 +13,19 @@ const Login = () => {
     // y verificar las credenciales en tu API
 
     // Simulación de autenticación exitosa
-    const isAuthenticated = true;
+    const isAuthenticated = false;
 
     if (isAuthenticated) {
       // Redirige a la página de publicaciones si la autenticación es exitosa
-      navigate.push('/publicacion');
+      navigate('/publicacion');
     } else {
       // Redirige a la página de registro de usuario si la autenticación falla
-      navigate.push('/registrar');
+      navigate('/registro');
     }
   };
 
   return (
-    <div>
+    <div class="container py-5 h-50">
       <div class="col text-center">
         <h1>Iniciar Sesion</h1>
       </div>
@@ -52,8 +52,8 @@ const Login = () => {
           />
         </div>
 
-        <div class="col text-center">
-          <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+        <div class="col text-center mb-4">
+          <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
         </div>
 
         <div class="col text-center">
@@ -63,7 +63,7 @@ const Login = () => {
       </form>
 
       <div class="text-center">
-        <p>No eres usuario <a href="#!">Registrate</a></p>
+        <p>No eres usuario <Link to="/registro">Registrate</Link></p>
       </div>
 
     </div>

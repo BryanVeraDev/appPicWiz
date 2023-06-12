@@ -1,7 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    // Realizar la consulta a la base de datos y obtener los resultados
+
+    // Redirigir a la página de resultados de búsqueda
+    navigate(`/search-results?query=${searchQuery}`);
+  };
+
+
+
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
@@ -15,8 +28,9 @@ const Navbar = () => {
             type="search"
             placeholder="Buscar"
             aria-label="Buscar"
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="btn btn-outline-success" type="submit">
+          <button className="btn btn-outline-success" type="submit" onClick={handleSearch}>
             Buscar
           </button>
         </form>
