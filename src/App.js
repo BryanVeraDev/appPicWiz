@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Login/>}> </Route>
           <Route path="/registro" element={<Registro/>} />
           <Route path="/perfil" element={<PerfilUsuario/>} />
-          <Route path="/publicacion/:id" element={<Publicacion/>} />
+          <Route path="/publicacion" element={<Publicacion/>} />
           <Route path="/subir-post" element={<SubirPost/>} />
         </Routes> 
       </Router>

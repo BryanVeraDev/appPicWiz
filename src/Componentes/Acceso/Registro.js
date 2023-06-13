@@ -62,6 +62,7 @@ const Registro = () => {
             setNombre('');
             setContrasena('');
             setCorreo('');
+            
             navigate("/perfil");
 
         } catch (err) {
