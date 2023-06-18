@@ -6,11 +6,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = () => {
-    // Realizar la consulta a la base de datos y obtener los resultados
-
-    // Redirigir a la página de resultados de búsqueda
-    navigate(`/search-results?query=${searchQuery}`);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search-results/${searchQuery}`);
+    //navigate(`/search-results`,  {state: searchQuery });
   };
 
 

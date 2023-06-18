@@ -1,27 +1,61 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from "axios";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({ onLogin }) => {
+  const [correo, setCorreo] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [errMsg, setErrMsg] = useState("");
+
+  
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
 
-    // Aquí puedes realizar la lógica para autenticar al usuario
-    // y verificar las credenciales en tu API
+      const response = await axios.post(  
+        "http://localhost:8080/PicWiz/api/apiusuario/usuario/ingresar/login",
+        JSON.stringify({ correo, contrasena }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-    // Simulación de autenticación exitosa
-    const isAuthenticated = false;
+      console.log(response.data);
+      const token = response.headers.get('Authorization');
+      console.log(response.headers.get('Authorization'));
+      localStorage.setItem('accessToken', token);
 
-    if (isAuthenticated) {
-      // Redirige a la página de publicaciones si la autenticación es exitosa
-      navigate('/publicacion');
-    } else {
-      // Redirige a la página de registro de usuario si la autenticación falla
-      navigate('/registro');
+      const userData = {
+        contrasena: response.data.contrasena,
+        correo: response.data.correo,
+        fecha_registro: response.data.fecha_registro,
+        id: response.data.id,
+        nombre: response.data.nombre,
+      };
+
+      onLogin(userData);
+
+      navigate('/perfil', { state: { user: {
+        contrasena: response.data.contrasena,
+        correo: response.data.correo,
+        fecha_registro: response.data.fecha_registro,
+        id: response.data.id,
+        nombre: response.data.nombre
+      }}});
+
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 404) {
+        setErrMsg("Username Taken");
+      } else {
+        setErrMsg("Registration Failed");
+      }
+      window.alert(errMsg);
     }
+
   };
 
   return (
@@ -36,8 +70,8 @@ const Login = () => {
             class="form-control form-control-lg"
             type="email"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
           />
           
         </div>
@@ -47,13 +81,13 @@ const Login = () => {
             class="form-control form-control-lg"
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
           />
         </div>
 
         <div class="col text-center mb-4">
-          <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+          <button type="submit" class="btn btn-primary btn-lg" onClick={handleLogin}>Sign in</button>
         </div>
 
         <div class="col text-center">
@@ -65,8 +99,8 @@ const Login = () => {
       <div class="text-center">
         <p>No eres usuario <Link to="/registro">Registrate</Link></p>
       </div>
-
     </div>
+    
   );
 };
 
