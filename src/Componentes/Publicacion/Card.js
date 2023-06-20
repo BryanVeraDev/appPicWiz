@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Card = ({tie}) => {
 
   var ruta = "/publicacion/" + tie.id;
-  console.log(ruta);
 
     return (
 

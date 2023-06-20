@@ -1,13 +1,8 @@
 import React from "react";
-import { useLocation } from 'react-router-dom';
 
-const PerfilUsuario = (userData) => {
+const PerfilUsuario = () => {
 
-  const location = useLocation();
-  const {user} = location.state;
-
-  console.log(user);
-  console.log(userData);
+  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   return (
     <section class="vh-100">
@@ -23,7 +18,7 @@ const PerfilUsuario = (userData) => {
                     class="rounded-circle img-fluid"
                   />
                 </div>
-                <h4 class="mb-2">{userData.user.nombre}</h4>
+                <h4 class="mb-2">{storedUser.nombre}</h4>
                 <p class="text-muted mb-4">
                   @Usuario
                 </p>

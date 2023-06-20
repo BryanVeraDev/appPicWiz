@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../redux/state/user'
 
 const Login = ({ onLogin }) => {
   const [correo, setCorreo] = useState('');
@@ -9,11 +11,11 @@ const Login = ({ onLogin }) => {
 
   
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-
+    try { 
       const response = await axios.post(  
         "http://localhost:8080/PicWiz/api/apiusuario/usuario/ingresar/login",
         JSON.stringify({ correo, contrasena }),
@@ -22,28 +24,12 @@ const Login = ({ onLogin }) => {
         }
       );
 
-      console.log(response.data);
+      
       const token = response.headers.get('Authorization');
-      console.log(response.headers.get('Authorization'));
       localStorage.setItem('accessToken', token);
 
-      const userData = {
-        contrasena: response.data.contrasena,
-        correo: response.data.correo,
-        fecha_registro: response.data.fecha_registro,
-        id: response.data.id,
-        nombre: response.data.nombre,
-      };
-
-      onLogin(userData);
-
-      navigate('/perfil', { state: { user: {
-        contrasena: response.data.contrasena,
-        correo: response.data.correo,
-        fecha_registro: response.data.fecha_registro,
-        id: response.data.id,
-        nombre: response.data.nombre
-      }}});
+      dispatch(createUser(response.data));
+      navigate('/publicaciones');
 
     } catch (err) {
       if (!err?.response) {

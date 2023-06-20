@@ -12,7 +12,6 @@ const CardPublicacion = ({data}) => {
                                     key ={tie.id}
                                     tie = {tie}             
                                 />
-                            
                             ))}
                         </div>
                     ) : (

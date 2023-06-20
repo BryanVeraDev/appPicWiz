@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Logout from '../Acceso/Logout'
 
 const Navbar = () => {
 
@@ -8,16 +9,17 @@ const Navbar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/search-results/${searchQuery}`);
-    //navigate(`/search-results`,  {state: searchQuery });
+    if (searchQuery.trim() !== '') {
+      navigate(`/search-results/${searchQuery}`);
+    }
   };
 
-
+  
 
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/publicaciones">
           PicWiz
         </Link>
 
@@ -35,15 +37,27 @@ const Navbar = () => {
         </form>
 
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-          <Link className="nav-link btn btn-primary" to="/perfil">
-              Perfil
-            </Link>
-          </li>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+            Perfil
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/#"><Link to="/perfil" class="nav-link active" href="#">Mi Perfil</Link></a></li>
+            <li><a class="dropdown-item" href="/#"><Link to="/mispublicaciones" class="nav-link active" href="#">Mis Publicaciones</Link></a></li>
+            <li><a class="dropdown-item" href="/#"><Link to="/miscomentarios" class="nav-link active" href="#">Mis Comentarios</Link></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
           <li className="nav-item">
             <Link className="nav-link btn btn-primary" to="/subir-post">
               Subir Post
             </Link>
+          </li>
+          <li className="nav-item">
+            <Logout/>
           </li>
         </ul>
       </div>

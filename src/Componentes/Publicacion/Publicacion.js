@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
-const Publicacion = ( user ) => {
+const Publicacion = () => {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [titulo, setTitulo] = useState("");
   const [imagenURL, setImagenURL] = useState("");
@@ -11,6 +11,8 @@ const Publicacion = ( user ) => {
   const [textoComentario, setTextoComentario] = useState("");
 
   var fecha_registro = new Date().toISOString().slice(0, 19);
+
+  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   const idPublicacion = useParams().id;
   const intId = parseInt(idPublicacion);
@@ -27,6 +29,7 @@ const Publicacion = ( user ) => {
          }
      };*/
     fetchData();
+    // eslint-disable-next-line
   },[idPublicacion]);
 
   const SEARCH_URL_PUBLICACION =
@@ -70,18 +73,18 @@ const Publicacion = ( user ) => {
 
   const agregarComentario = async (e) => {
     e.preventDefault();
-    console.log(user.user.id);
+    console.log(storedUser.id);
 
     console.log(idPublicacion)
     console.log(JSON.stringify({ fecha: fecha_registro, "idPublicacion": {
       "id": intId}, "idUsuario": {
-        "id": user.user.id}, texto: textoComentario
+        "id": storedUser.id}, texto: textoComentario
   }));
     try {
       const response = await axios.post(SEARCH_URL_POST_COMENTARIO,
         JSON.stringify({ fecha: fecha_registro, "idPublicacion": {
           "id": intId}, "idUsuario": {
-            "id": user.user.id}, texto: textoComentario
+            "id": storedUser.id}, texto: textoComentario
       }),
         {
           headers: { "Content-Type": "application/json" },
