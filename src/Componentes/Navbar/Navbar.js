@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Logout from "../Acceso/Logout";
 import SubirPost from "../Publicacion/Subir-Post";
 
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +19,7 @@ const Navbar = () => {
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid bg-light bg-opacity-75">
         <Link className="navbar-brand" to="/publicaciones">
-          PicWiz
+          <img src="logoNavBar.png" alt="logo pic wiz"/>
         </Link>
         <form className="d-flex">
           <input
