@@ -12,6 +12,6 @@ function Logout() {
     dispatch(resetUser());
     navigate(PublicRoutes.LOGIN, { replace: true });
   };
-  return <button className="nav-link btn btn-primary" onClick={logOut}>Cerrar Sesión</button>;
+  return <button className="nav-link btn btn-light" onClick={logOut}>Cerrar Sesión</button>;
 }
 export default Logout;

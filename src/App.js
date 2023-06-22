@@ -24,20 +24,19 @@ function App() {
       <Suspense fallback={<>Cargando</>}>
         <Provider store={store}>
           <Router>
-            <Navbar />
             <Routes>
               <Route path="/" element={<Navigate to = {PublicRoutes.LOGIN}/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/registro" element={<Registro />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<> <Navbar /><NotFound /></>} />
               <Route element={<AuthGuard />}>
-                <Route path="/perfil" element={<PerfilUsuario />} />
-                <Route path="/miscomentarios" element={<MisComentarios />} />
-                <Route path="/mispublicaciones" element={<MisPublicaciones />} />
-                <Route path="/publicacion/:id" element={<Publicacion />} />
-                <Route path="/publicaciones" element={<Publicaciones />} />
-                <Route path="/subir-post" element={<SubirPost />} />
-                <Route path="/search-results/:searchQuery"element={<FiltrarPost />}/>
+                <Route path="/perfil" element={<><Navbar /><PerfilUsuario /></>} />
+                <Route path="/miscomentarios" element={<> <Navbar /><MisComentarios/> </>} />
+                <Route path="/mispublicaciones" element={<> <Navbar /><MisPublicaciones /> </>} />
+                <Route path="/publicacion/:id" element={<> <Navbar /><Publicacion /> </>} />
+                <Route path="/publicaciones" element={<> <Navbar /><Publicaciones /> </>} />
+                <Route path="/subir-post" element={<> <Navbar /><SubirPost /> </>} />
+                <Route path="/search-results/:searchQuery"element={<> <Navbar /><FiltrarPost /> </>}/>
               </Route>
             </Routes>
           </Router>

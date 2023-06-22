@@ -1,0 +1,17 @@
+.card-publicacion .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card-publicacion .col {
+    flex-basis: calc(100% / 3);
+    padding: 0 15px;
+  }
+  
+  .card-publicacion .col:last-child {
+    flex-basis: auto;
+  }
+  
+  .card-publicacion .col .card {
+    height: 100%;
+  }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import "./estilo.css";
 
 const USER_REGEX = /^[A-Za-z][A-Za-z0-9-_ ]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -84,63 +85,75 @@ const Registro = () => {
   };
 
   return (
-    <div class="container py-5 h-50">
-      <div class="col text-center">
-        <h1>Registrarse</h1>
+    <div class="container text-center">
+      <div class="row vh-100 justify-content-center align-items-center animate__animated animate__bounce">
+        <div class="col-auto  shadow  rounded w-50 h-50">
+          <form onSubmit={handleSubmit} class="formulario">
+            <div style={{ padding: "3%" }}>
+              <h1>Registrarse</h1>
+            </div>
+
+            <div class="w-75 mb-2">
+              <input
+                onChange={(e) => setNombre(e.target.value)}
+                class="form-control"
+                type="text"
+                id="nombre"
+                value={nombre}
+                placeholder="Nombre"
+              />
+            </div>
+
+            <div class="w-75 mb-2">
+              <input
+                class="form-control "
+                type="email"
+                id="correo"
+                value={correo}
+                placeholder="Correo"
+                onChange={(e) => setCorreo(e.target.value)}
+              />
+            </div>
+
+            <div class="w-75 mb-2">
+              <input
+                class="form-control"
+                type={mostrarContrasena ? "text" : "password"}
+                id="contrasena"
+                value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)}
+                placeholder="Contraseña"
+              />
+            </div>
+
+            <div class=" row w-75">
+              <button
+                class="btn btn-light mb-2"
+                onClick={toggleMostrarContrasena}
+                id="mostrarContr"
+              >
+                {mostrarContrasena ? "Ocultar" : "Mostrar"} contraseña
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                onClick={handleSubmit}
+              >
+                Registrar
+              </button>
+              <div class="text-center mt-3">
+                <p>
+                  Ya eres usuario{" "}
+                  <Link to="/login" className="text-success">
+                    Inicia Sesión
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div class="d-flex flex-row align-items-center mb-4">
-          <div class="form-outline flex-fill mb-0">
-            <label htmlFor="nombre">Nombre:</label>
-            <input
-              onChange={(e) => setNombre(e.target.value)}
-              class="form-control"
-              type="text"
-              id="nombre"
-              value={nombre}
-            />
-          </div>
-        </div>
-
-        <div class="d-flex flex-row align-items-center mb-4">
-          <div class="form-outline flex-fill mb-0">
-            <label htmlFor="correo">Correo:</label>
-            <input
-              class="form-control"
-              type="email"
-              id="correo"
-              value={correo}
-              onChange={(e) => setCorreo(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div class="d-flex flex-row align-items-center mb-4">
-          <div class="form-outline flex-fill mb-0">
-            <label htmlFor="contrasena">Contraseña:</label>
-            <input
-              class="form-control"
-              type={mostrarContrasena ? "text" : "password"}
-              id="contrasena"
-              value={contrasena}
-              onChange={(e) => setContrasena(e.target.value)}
-            /> 
-            <button class="btn btn-primary mt-2" onClick={toggleMostrarContrasena} id="mostrarContr">
-              {mostrarContrasena ? "Ocultar" : "Mostrar"} contraseña
-            </button>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button
-            type="button"
-            class="btn btn-primary btn-lg"
-            onClick={handleSubmit}
-          >
-            Registrar
-          </button>
-        </div>
-      </form>
     </div>
   );
 };

@@ -4,40 +4,39 @@ import FilaPublicacion from './FilaPublicacion';
 const Tabla = ({data, editarPublicacion, loading}) => {
     return (
         <div>
-            <table class="table table-striped">
-                <thead>
-                    <th>Id</th>
-                    <th>Fecha</th>
-                    <th>Título</th>
-                    <th>Descripción</th>
-                </thead>
-                <tbody>
 
                     {
                         data.length > 0 ? (
-                            data.map((tie) => (
-                                <FilaPublicacion
-                                key = {tie.id}
-                                tie = {tie}
-                                editarPublicacion={editarPublicacion}
-                                loading={loading}
-                                />
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Id</th>
+                                    <th>Fecha</th>
+                                    <th>Comentario</th>
+                                    <th>Publicacion</th>
+                                </thead>
+                                <tbody>
+                                    {data.map((tie) => (
+                                        <FilaPublicacion
+                                            key = {tie.id}
+                                            tie = {tie}
+                                            editarPublicacion={editarPublicacion}
+                                            loading={loading}
+                                        />
                                
-                            )   
-                        )
+                                    )   
+                                     )}
+                                </tbody>
+                            </table>
                         ): (
-                            <tr>
-                                <td colSpan = "6">
-                                    <img src = "https://media.tenor.com/b0AYSDwOv90AAAAS/carga.gif" alt = "Error"></img>
-                                    </td>
-
-
-                            </tr>
+                            <div className="d-flex justify-content-center align-items-center vh-100">
+                                <div className="text-center">
+                                    <h3 className="text-muted mt-5">No hay publicaciones</h3>
+                                    <p className="lead">¡Vuelve pronto para ver nuevas publicaciones!</p>
+                                </div>
+                            </div>
                         )
                     }
                 
-                </tbody>
-            </table>
         </div>
     );
 };

@@ -38,6 +38,9 @@ const Publicacion = () => {
   `http://localhost:8080/PicWiz/api/apicomentario/comentario/idpublicacion/${idPublicacion}`;
   const SEARCH_URL_POST_COMENTARIO =
     "http://localhost:8080/PicWiz/api/apicomentario/comentario";
+    const SEARCH_URL_POST_SEGUIDOR =
+    "http://localhost:8080/PicWiz/api/apiseguidor/seguidor";
+  
 
   const fetchData = async () => {
     try {
@@ -98,15 +101,33 @@ const Publicacion = () => {
     }
   };
 
-  /*const fetchDataComentario = async () => {
+  const agregarSeguidor = async (e) => {
+    e.preventDefault();
     try {
-      const comentario = await axios.get(SEARCH_URL_GET_COMENTARIO);
-      console.log(JSON.stringify(comentario.data));
-      setComentarios(comentario.data);
+      const responseSeguido = await axios.get(SEARCH_URL_PUBLICACION);
+      console.log(JSON.stringify(responseSeguido.data));
+      const idUsuario = responseSeguido.data.id_usuario.id;
+
+      const responseSeguidor = await axios.post(SEARCH_URL_POST_SEGUIDOR,
+        JSON.stringify({ fechaSeguimiento: fecha_registro, seguido: {
+          id: idUsuario}, seguidor: {
+            id: storedUser.id}
+      }),
+        {
+          headers: { "Content-Type": "application/json" },
+        });
+
+        console.log(responseSeguidor.data);
+        window.alert(`Has Seguido a ${responseSeguido.data.id_usuario.nombre}`);
+        
     } catch (error) {
-      console.log("Se produjo un error");
+      if (error.response && error.response.status === 409) {
+        window.alert("Ya sigues a este usuario");
+      } else {
+        console.log("Se produjo un error");
+      }
     }
-  };*/
+  };
 
   return (
     <div className="card my-4">
@@ -118,7 +139,7 @@ const Publicacion = () => {
         style={{ width: '30px', height: '30px' }}
       />
       <span>{nombreUsuario}</span>
-      <button className="btn btn-primary ms-auto">Usuario</button>
+      <button className="btn btn-primary ms-auto" onClick={agregarSeguidor}>Seguir Usuario</button>
     </div>
     <div className="card-body">
       <h5 className="card-title">{titulo}</h5>
